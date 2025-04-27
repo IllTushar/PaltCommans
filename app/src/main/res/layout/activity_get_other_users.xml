@@ -7,12 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".Ui.CreateNewUser.GetOtherUsers">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/getRecyclerView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/users_toolbar"
+            layout="@layout/comman_toolbar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/getRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

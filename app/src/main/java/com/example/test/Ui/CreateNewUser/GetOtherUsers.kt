@@ -2,6 +2,7 @@ package com.example.test.Ui.CreateNewUser
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,8 @@ class GetOtherUsers : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGetOtherUsersBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupToolbar(binding)
+        setSupportActionBar(binding.usersToolbar.root)
 
         viewModel.usersFromDb.observe(this) { users ->
 
@@ -31,9 +34,15 @@ class GetOtherUsers : AppCompatActivity() {
                 for (user in users) {
                     dataList.add(user)
                 }
+            } else {
+                Toast.makeText(this@GetOtherUsers, "No User Available", Toast.LENGTH_SHORT).show()
             }
             val adapter = StoreUserAdapter(this@GetOtherUsers, dataList)
             binding.getRecyclerView.adapter = adapter
         }
+    }
+
+    private fun setupToolbar(binding: ActivityGetOtherUsersBinding) {
+        binding.usersToolbar.title.text = "Offline Users"
     }
 }
