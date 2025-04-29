@@ -23,7 +23,7 @@ interface Services {
 
 
     @Headers(
-        "x-apihub-key: bV0ZGg3MvUzLKfRdJKpJ208oIZD4LsIMr0c7RrqnHM9XWhx4rI",
+        "x-apihub-key: kHQv34td3YJ4RcXt9tYS0weceegVwu7pCiGHplK3VYt-1PQ-sx",
         "x-apihub-host: TMDB-Movies-and-TV-Shows-API-by-APIRobots.allthingsdev.co",
         "x-apihub-endpoint: 85ffa74b-8298-40ac-908a-736892987ab1"
     )
