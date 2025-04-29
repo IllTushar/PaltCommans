@@ -19,7 +19,6 @@
         <include
             android:id="@+id/toolbar"
             layout="@layout/comman_toolbar" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movieRecyclerView"
             android:layout_width="match_parent"

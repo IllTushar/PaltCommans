@@ -3,10 +3,11 @@ package com.example.test.Ui.Movie
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.test.R
+
+import com.example.test.Ui.GetUsers.PagingSource.LoadingState.LoadStateFooterAdapter
+
 import com.example.test.Ui.Movie.Adapter.MoviePagingAdapter
 import com.example.test.ViewModel.UserViewModel
 import com.example.test.databinding.ActivityMovieInfoBinding
@@ -28,6 +29,10 @@ class MovieInfo : AppCompatActivity() {
         movieAdapter = MoviePagingAdapter()
         binding.movieRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.movieRecyclerView.adapter = movieAdapter
+        binding.movieRecyclerView.adapter = movieAdapter.withLoadStateHeaderAndFooter(
+            header = LoadStateFooterAdapter { movieAdapter.retry() },
+            footer = LoadStateFooterAdapter { movieAdapter.retry() }
+        )
 
         lifecycleScope.launch {
             viewModel.moviePagingFlow.collectLatest {

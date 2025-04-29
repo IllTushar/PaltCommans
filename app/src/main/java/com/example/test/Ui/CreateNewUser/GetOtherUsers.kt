@@ -31,10 +31,14 @@ class GetOtherUsers : AppCompatActivity() {
             // Example: show the first user's name
             val dataList = mutableListOf<UserResponseRoomDB>()
             if (users.isNotEmpty()) {
+                binding.emptyLayout.root.visibility = android.view.View.GONE
+                binding.getRecyclerView.visibility = android.view.View.VISIBLE
                 for (user in users) {
                     dataList.add(user)
                 }
             } else {
+                binding.getRecyclerView.visibility = android.view.View.GONE
+                binding.emptyLayout.root.visibility = android.view.View.VISIBLE
                 Toast.makeText(this@GetOtherUsers, "No User Available", Toast.LENGTH_SHORT).show()
             }
             val adapter = StoreUserAdapter(this@GetOtherUsers, dataList)

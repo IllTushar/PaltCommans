@@ -3,24 +3,17 @@ package com.example.test.Ui.GetUsers
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import androidx.paging.LoadState
-import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.test.R
 import com.example.test.Ui.CreateNewUser.GetOtherUsers
 import com.example.test.Ui.CreateNewUser.Request.RequestUserInfo
 import com.example.test.Ui.GetUsers.Adapter.UsersAdapter
+import com.example.test.Ui.GetUsers.PagingSource.LoadingState.LoadStateFooterAdapter
 import com.example.test.ViewModel.UserViewModel
 import com.example.test.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,43 +80,3 @@ private fun setUpToolbar(binding: ActivityMainBinding) {
     binding.toolbar.title.text = "Main-Page"
 }
 
-// Custom LoadStateAdapter implementation
-class LoadStateFooterAdapter(private val retry: () -> Unit) :
-    LoadStateAdapter<LoadStateFooterAdapter.LoadStateViewHolder>() {
-
-
-    override fun onBindViewHolder(
-        holder: LoadStateViewHolder,
-        loadState: LoadState,
-    ) {
-        holder.bind(loadState, retry)
-    }
-
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        loadState: LoadState,
-    ): LoadStateViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_load_state, parent, false)
-        return LoadStateViewHolder(view)
-    }
-
-    class LoadStateViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val progressBar: ProgressBar = view.findViewById(R.id.progressBar)
-        private val retryButton: Button = view.findViewById(R.id.retryButton)
-        private val errorMsg: TextView = view.findViewById(R.id.errorMsg)
-        fun bind(loadState: LoadState, retry: () -> Unit) {
-            retryButton.setOnClickListener { retry() }
-
-            // Show the relevant views based on the load state
-            progressBar.isVisible = loadState is LoadState.Loading
-            retryButton.isVisible = loadState is LoadState.Error
-            errorMsg.isVisible = loadState is LoadState.Error
-
-            if (loadState is LoadState.Error) {
-                errorMsg.text = loadState.error.localizedMessage
-                    ?: "Unknown error occurred"
-            }
-        }
-    }
-}
