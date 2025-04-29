@@ -7,6 +7,8 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.example.test.Network.NetworkAvailblity
+import com.example.test.Network.NetworkStatus
 import com.example.test.Repo.Repository
 import com.example.test.RoomDB.UserResponseRoomDB
 import com.example.test.Ui.CreateNewUser.Request.RequestUserInfo
@@ -17,7 +19,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class UserViewModel @Inject constructor(private val repo: Repository) : ViewModel() {
+class UserViewModel @Inject constructor(
+    private val repo: Repository,
+    private val networkObserver: NetworkAvailblity,
+) : ViewModel() {
+
+    private val _isOffline = MutableLiveData<Boolean>()
+    val isOffline: LiveData<Boolean> = _isOffline
+
+    init {
+        viewModelScope.launch {
+            networkObserver.observe().collect { status ->
+                _isOffline.postValue(status == NetworkStatus.Lost)
+            }
+        }
+    }
+
 
     private val _response = MutableLiveData<CreateUserResponse>()
     val response: LiveData<CreateUserResponse> = _response

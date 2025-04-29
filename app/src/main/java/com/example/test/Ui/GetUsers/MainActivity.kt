@@ -3,6 +3,7 @@ package com.example.test.Ui.GetUsers
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -39,6 +40,13 @@ class MainActivity : AppCompatActivity() {
             footer = LoadStateFooterAdapter { adapter.retry() }
         )
 
+        viewModel.isOffline.observe(this) {
+            if (it) {
+                binding.offlineMode.root.visibility = View.VISIBLE
+            } else {
+                binding.offlineMode.root.visibility = View.GONE
+            }
+        }
         viewModel.usersLiveData.observe(this) {
             adapter.submitData(lifecycle, it)
         }

@@ -1,6 +1,7 @@
 package com.example.test.Ui.Movie
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -34,6 +35,13 @@ class MovieInfo : AppCompatActivity() {
             footer = LoadStateFooterAdapter { movieAdapter.retry() }
         )
 
+        viewModel.isOffline.observe(this) {
+            if (it) {
+                binding.offlineMode.root.visibility = View.VISIBLE
+            } else {
+                binding.offlineMode.root.visibility = View.GONE
+            }
+        }
         lifecycleScope.launch {
             viewModel.moviePagingFlow.collectLatest {
                 movieAdapter.submitData(it)

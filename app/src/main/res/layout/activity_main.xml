@@ -16,6 +16,11 @@
             android:id="@+id/toolbar"
             layout="@layout/comman_toolbar" />
 
+        <include
+            android:id="@+id/offlineMode"
+            layout="@layout/offline_layout"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
